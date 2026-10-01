@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arrival
 
-## Getting Started
+Arrival checks kids in and out of practice.
 
-First, run the development server:
+## Install
+
+```bash
+npm install
+```
+
+## Run the tests
+
+```bash
+npm test
+```
+
+## Start the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. The practice code is `practice`. Set `COACH_CODE` to change it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Try a practice
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Create a team.
+2. Click **Use sample roster**.
+3. Click **Open practice**.
+4. Open the parent URL under the QR code.
+5. Enter a PIN from the roster.
+6. Open **Board** and watch the row change.
+7. Enter the same PIN again to check out.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. If `TURSO_DATABASE_URL` is unset, Arrival uses `file:data/arrival.db`.
