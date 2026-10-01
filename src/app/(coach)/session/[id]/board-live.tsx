@@ -91,7 +91,7 @@ export function BoardLive({ sessionId, initial }: { sessionId: string; initial: 
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.studentId} className="border-b border-zinc-200">
+              <tr key={row.studentId} className={`border-b border-zinc-200 ${rowTone(row.status)}`}>
                 <td className="py-3 pr-3">
                   {row.firstName} {row.lastName}
                 </td>
@@ -113,6 +113,12 @@ function statusText(status: BoardRow["status"]): string {
   if (status === "checked_in") return "Checked in";
   if (status === "checked_out") return "Checked out";
   return "Not yet arrived";
+}
+
+function rowTone(status: BoardRow["status"]): string {
+  if (status === "checked_in") return "bg-emerald-50";
+  if (status === "checked_out") return "text-zinc-500";
+  return "";
 }
 
 function clock(iso: string): string {

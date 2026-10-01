@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { CopyPin } from "@/components/copy-pin";
 import { getArrival } from "@/server/arrival";
 import { qrDataUrl, requestOrigin } from "@/server/qr";
@@ -150,7 +149,7 @@ async function OpenPractice({
   return (
     <div className="grid gap-3">
       <h2 className="text-2xl font-semibold">{label}</h2>
-      <Image src={qr} alt="Parent link QR code" width={280} height={280} className="h-auto w-full max-w-xs" />
+      <img src={qr} alt="Parent link QR code" width={280} height={280} className="h-auto w-full max-w-xs" />
       <a className="break-all text-lg underline" href={url}>
         {url}
       </a>
