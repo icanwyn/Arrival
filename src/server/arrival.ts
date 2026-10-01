@@ -1,20 +1,29 @@
 import { mkdirSync } from "node:fs";
-import { createClient } from "@libsql/client";
+import { createClient as createLibsql } from "@libsql/client";
+import { createClient } from "@supabase/supabase-js";
 import { bindArrival, brandIsoInstant, type Arrival, type Entropy } from "@/arrival";
 import { libsqlStore } from "@/arrival-store";
+import { supabaseStore } from "@/supabase-store";
 
 let cached: Arrival | undefined;
 
 export function getArrival(): Arrival {
   if (cached) return cached;
-  const configured = process.env.TURSO_DATABASE_URL?.trim();
-  const url = configured ? configured : "file:data/arrival.db";
-  const authToken = process.env.TURSO_AUTH_TOKEN?.trim();
-  if (url.startsWith("file:")) ensureFileDirectory(url);
-  const client = createClient(
-    !url.startsWith("file:") && authToken ? { url, authToken } : { url },
-  );
-  cached = bindArrival({ store: libsqlStore(client), entropy: nodeEntropy() });
+  const url = process.env.SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (url && key) {
+    const client = createClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    cached = bindArrival({ store: supabaseStore(client), entropy: nodeEntropy() });
+    return cached;
+  }
+  if (process.env.VERCEL) {
+    throw new Error("Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY");
+  }
+  const file = "file:data/arrival.db";
+  ensureFileDirectory(file);
+  cached = bindArrival({ store: libsqlStore(createLibsql({ url: file })), entropy: nodeEntropy() });
   return cached;
 }
 

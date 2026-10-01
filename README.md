@@ -34,4 +34,13 @@ Open http://localhost:3000. The practice code is `practice`. Set `COACH_CODE` to
 
 ## Deploy on Vercel
 
-Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. If `TURSO_DATABASE_URL` is unset, Arrival uses `file:data/arrival.db`.
+Run `supabase/schema.sql` in the Supabase SQL editor. Then set these on the Vercel project:
+
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+Both are server-only. Row level security is enabled and there are no anon policies, so the anon key cannot read PINs. Leave the service role key out of the browser and out of git.
+
+`COACH_CODE` is optional. It defaults to `practice`.
+
+On your machine, if those two variables are unset, `npm run dev` uses `file:data/arrival.db`. On Vercel a request fails until they are set. Turso is not used.
